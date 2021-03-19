@@ -6,40 +6,42 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:32:43 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/19 19:04:50 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/19 23:45:19 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int			*indexing(int *arr, int len, int j)
+void			indexing(t_stack *stack, int j)
 {
-	char	used[500];
+	char	*used;
 	int		*out;
 	int 	i;
 	int		k;
 	int		min;
 
-	i = -1;
-	out = malloc(len * sizeof(int));
-	while (++i < len)
+	i = 0;
+	used = ft_calloc(500, sizeof(int));
+	while (i < stack->len)
 	{
 		min = MAX_INT;
 		k = -1;
-		while (++k < len)
-			if (!used[k])
-				if (arr[k] <= min)
-					min = arr[k];
+		while (++k < stack->len)
+			if (used[k] == 0 && stack->stack[k] <= min)
+				min = stack->stack[k];
 		k = -1;
-		while (++k < len)
-			if (arr[k] == min)
+		while (++k < stack->len)
+		{
+			if (stack->stack[k] == min && used[k] == 0)
 			{
 				used[k] = 1;
-				out[k] = j;
+				stack->indexed[k] = j;
 				j++;
 			}
+		}
+		i++;
 	}
-	return (out);
+	free(used);
 }
 
 t_stack		parse(int argc, char **argv, t_stack stack)
@@ -68,7 +70,7 @@ t_stack		init_stack(t_stack stack, int len)
 	if (!(stack.stack = ft_calloc(len, sizeof(int *))))
 		return (stack);
 	stack.len = 0;
-	stack.indexed = indexing(stack.stack, stack.len, 1);
+	indexing(&stack, 1);
 	return (stack);
 }
 
@@ -76,27 +78,25 @@ int			main(int argc, char **argv)
 {
 	t_stack		stack_a;
 	t_stack		stack_b;
-	char		**moves;
-	char		*m;
 
+	if (argc < 2)
+		return (0);
 	stack_a = parse(argc, argv, stack_a);
 	stack_b = init_stack(stack_b, stack_a.len);
-	stack_a.indexed = indexing(stack_a.stack, stack_a.len, 1);
-	moves = define_moves();
+	stack_a.indexed = ft_calloc(stack_a.len, sizeof(int));
+	indexing(&stack_a , 1);
+	//moves = define_moves();
 	ft_print_arrint(stack_a.stack, stack_a.len, FRED);
 	ft_print_arrint(stack_a.indexed, stack_a.len, FPURPLE);
 	ft_print_arrint(stack_b.stack, stack_b.len, FGREEN);
 	ft_print_arrint(stack_b.indexed, stack_b.len, FYELLOW);
-	while (1)
-	{
-		scanf("%s", m);
-		move(&stack_a, &stack_b, m);
-		ft_print_arrint(stack_a.stack, stack_a.len, FRED);
-	ft_print_arrint(stack_a.indexed, stack_a.len, FPURPLE);
-	ft_print_arrint(stack_b.stack, stack_b.len, FGREEN);
-	ft_print_arrint(stack_b.indexed, stack_b.len, FYELLOW);
-	printf("\n");
-	}
+	algorithm(&stack_a, &stack_b);
+	//while (1)
+	//{
+	//	scanf("%s", m);
+	//	move(&stack_a, &stack_b, m);
+	//	print_stack(&stack_a, &stack_b);
+	//}
 	//do_sasb(&stack_a);
 	//ft_print_arrint(stack_a.stack, stack_a.len, "-->");
 	//ft_print_arrint(stack_a.indexed, stack_a.len, "ooo>");

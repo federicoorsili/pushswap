@@ -53,5 +53,7 @@ void				rotate_rev_one_stack(t_stack *stack);
 void				rotate_rev_two_stack(t_stack *stack_a, t_stack *stack_b);
 char				**define_moves(void);
 void				move(t_stack *stack_a, t_stack *stack_b, char *move);
+void				print_stack(t_stack *stack_a, t_stack *stack_b);
+void				algorithm(t_stack *stack_a, t_stack *stack_b);
 
 #endif

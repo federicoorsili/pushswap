@@ -8,6 +8,7 @@ SRCS	=	pushswap.c \
 			swap.c \
 			swap2.c \
 			swap3.c \
+			algorithm.c \
 
 OBJ		=	$(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 15:53:49 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/19 19:12:58 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/19 23:00:52 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ void	shift_stack(t_stack *stack, int mod)
 	}
 	if (mod)
 	{
-		stack->stack[i - 1] = tmp1;
-		stack->indexed[i - 1] = tmp2;
+		stack->stack[stack->len - 1] = tmp1;
+		stack->indexed[stack->len - 1] = tmp2;
 	}
 	else
 	{
-		stack->stack[i - 1] = 0;
-		stack->indexed[i - 1] = 0;
+		stack->stack[stack->len - 1] = 0;
+		stack->indexed[stack->len - 1] = 0;
 		stack->len -= 1;
 	}
 }
@@ -109,6 +109,8 @@ void	shift_rev_stack(t_stack *stack, int mod)
 
 void	do_push(t_stack *stack_a, t_stack *stack_b)
 {
+	//if (stack_a->len < 1)
+	//	return ;
 	shift_rev_stack(stack_b, 0);
 	stack_b->stack[0] = stack_a->stack[0];
 	stack_b->indexed[0] = stack_a->indexed[0];
