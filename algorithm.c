@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 21:45:49 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/20 00:48:00 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/20 12:09:55 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,39 @@ int			src_min(t_stack *stack, int min)
 	return (1);
 }
 
+void		recursion(t_stack *stack_a, t_stack *stack_b)
+{
+
+}
+
+void		algorithm2(t_stack *stack_a, t_stack *stack_b)
+{
+	int i;
+	int min;
+
+	min = 1;
+	i = 0;
+	while (1)
+	{
+		if ((stack_a->indexed[0] >= min) && (stack_a->indexed[0] <= min + 10))
+			move(stack_a, stack_b, "pb");
+		else if (stack_b->len == 10)
+		{
+			i += recursion;
+			while (stack_b->len != 0)
+			{
+				move(stack_a, stack_b, "pa");
+				move(stack_a, stack_b, "ra");
+				i++;
+			}
+			min += 10;
+		}
+		else
+			move(stack_a, stack_b, "ra");
+	}
+	
+}
+
 void		algorithm(t_stack *stack_a, t_stack *stack_b)
 {
 	int i;
@@ -88,6 +121,11 @@ void		algorithm(t_stack *stack_a, t_stack *stack_b)
 			move(stack_a, stack_b, "ra");
 			min++;
 		}
+		//if (stack_a->indexed[stack_a->len] == min)
+		//{
+		//	move(stack_a, stack_b, "rra");
+		//	min++;
+		//}
 		else if (is_ordinated(stack_a))
 		{
 			if (stack_b->len == 0)
@@ -95,11 +133,6 @@ void		algorithm(t_stack *stack_a, t_stack *stack_b)
 			src = src_min(stack_b, min);
 			while (stack_b->len != 0)
 			{
-				if (src == 0 && is_ordinated(stack_a))
-				{
-					min++;
-					src = src_min(stack_b, min);
-				}
 				if (src > 0)
 				{
 					if (stack_b->indexed[0] == min)
@@ -116,6 +149,7 @@ void		algorithm(t_stack *stack_a, t_stack *stack_b)
 					}
 					else
 						move(stack_a, stack_b, "rb");
+					i++;	
 				}
 				if (src < 0)
 				{
@@ -134,9 +168,9 @@ void		algorithm(t_stack *stack_a, t_stack *stack_b)
 					}
 					else
 						move(stack_a, stack_b, "rrb");
+					i++;	
 				}
-				
-				i++;	
+				//print_stack(stack_a, stack_b);
 			}
 		}
 		else
