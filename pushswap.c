@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:32:43 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/19 23:45:19 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/20 13:53:44 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,16 @@ t_stack		init_stack(t_stack stack, int len)
 	return (stack);
 }
 
-int			main(int argc, char **argv)
+int			main(int argc, char **argv, char **env)
 {
 	t_stack		stack_a;
 	t_stack		stack_b;
+	char		*m;
 
 	if (argc < 2)
 		return (0);
+	e = &env;
+	m = malloc(300);
 	stack_a = parse(argc, argv, stack_a);
 	stack_b = init_stack(stack_b, stack_a.len);
 	stack_a.indexed = ft_calloc(stack_a.len, sizeof(int));
@@ -91,12 +94,12 @@ int			main(int argc, char **argv)
 	ft_print_arrint(stack_b.stack, stack_b.len, FGREEN);
 	ft_print_arrint(stack_b.indexed, stack_b.len, FYELLOW);
 	algorithm(&stack_a, &stack_b);
-	//while (1)
-	//{
-	//	scanf("%s", m);
-	//	move(&stack_a, &stack_b, m);
-	//	print_stack(&stack_a, &stack_b);
-	//}
+	while (1)
+	{
+		scanf("%s", m);
+		move(&stack_a, &stack_b, m);
+		print_stack(&stack_a, &stack_b);
+	}
 	//do_sasb(&stack_a);
 	//ft_print_arrint(stack_a.stack, stack_a.len, "-->");
 	//ft_print_arrint(stack_a.indexed, stack_a.len, "ooo>");

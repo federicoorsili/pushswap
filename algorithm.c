@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 21:45:49 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/20 12:09:55 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/20 13:53:34 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,33 @@ void		print_stack(t_stack *stack_a, t_stack *stack_b)
 {
 	int i;
 	int max;
+	char s[100];
+	char **out;
 
 	i = 0;
 	if (stack_b->len > stack_a->len)
 		max = stack_b->len;
 	else
 		max = stack_a->len;
-	while (i < max)
+	while (i < stack_a->len)
 	{
 		if (i < stack_a->len)
-			printf(FRED"%.3d|%10.d   ", stack_a->indexed[i], 0);
-		else
-			printf(FRED"%3.d|%10.d   ", 0, 0);
+			printf(FRED"%.3d|%s%*.d%s\n", stack_a->indexed[i],BRED, stack_a->indexed[i],0, NONE);
+		//else
+		//	printf(FRED"%3.d|%10.d   ", 0, 0);
+		i++;
+	}
+	i = 0;
+	while (i < stack_b->len)
+	{
 		if (i < stack_b->len)
-			printf(FGREEN"|%10.d|%.3d", 0, stack_b->indexed[i]);
-		else
-			printf(FGREEN"%10.d|   ", 0);
-		printf("\n");
+			printf(FGREEN"%.3d|%s%*.d%s\n", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
+		//else
+			//printf(FGREEN"%10.d|   ", 0);
 		i++;
 	}
 	printf("___________________________________________\n");
+	scanf("%c", s);
 }
 
 int			is_ordinated(t_stack *stack)
@@ -70,11 +77,24 @@ int			src_min(t_stack *stack, int min)
 	return (1);
 }
 
-void		recursion(t_stack *stack_a, t_stack *stack_b)
-{
+char **RES = NULL;
+int FIND = 3;
 
-}
-
+//void 	recursion(t_stack stack_a, t_stack stack_b, int i, char **list_f, int **status, char **moves)
+//{
+//	if (i + 1 > FIND)
+//		return;
+//	if (is_ordinated(&stack_b))
+//	{
+//		RES = list_f;
+//		FIND = i;
+//		return;
+//	}
+//	for (int j = 0; j < 11; j++)
+//	{
+//		recursion(stack_a, stack_b, int i, char **list_f, int **status, char **moves)
+//	}
+//
 void		algorithm2(t_stack *stack_a, t_stack *stack_b)
 {
 	int i;
@@ -88,7 +108,7 @@ void		algorithm2(t_stack *stack_a, t_stack *stack_b)
 			move(stack_a, stack_b, "pb");
 		else if (stack_b->len == 10)
 		{
-			i += recursion;
+			//recursion;
 			while (stack_b->len != 0)
 			{
 				move(stack_a, stack_b, "pa");
@@ -170,12 +190,12 @@ void		algorithm(t_stack *stack_a, t_stack *stack_b)
 						move(stack_a, stack_b, "rrb");
 					i++;	
 				}
-				//print_stack(stack_a, stack_b);
+				print_stack(stack_a, stack_b);
 			}
 		}
 		else
 			move(stack_a, stack_b, "pb");
-		//print_stack(stack_a, stack_b);
+		print_stack(stack_a, stack_b);
 		i++;
 	}
 	printf(FYELLOW"\n");

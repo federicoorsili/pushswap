@@ -42,6 +42,8 @@ typedef struct		s_h
 	char			mov[11][3];
 }					t_h;
 
+char		***e;
+
 void				do_sasb(t_stack *stack);
 void				do_ss(t_stack *stack_a, t_stack *stack_b);
 void				shift_stack(t_stack *stack, int mod);
