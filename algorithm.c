@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 21:45:49 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/20 13:53:34 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/20 14:25:03 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,33 @@ void		print_stack(t_stack *stack_a, t_stack *stack_b)
 	char **out;
 
 	i = 0;
-	if (stack_b->len > stack_a->len)
-		max = stack_b->len;
-	else
-		max = stack_a->len;
-	while (i < stack_a->len)
+	max = stack_a->len + stack_b->len;
+	printf("\e[1;1H\e[2J");
+	while (i < max)
 	{
 		if (i < stack_a->len)
-			printf(FRED"%.3d|%s%*.d%s\n", stack_a->indexed[i],BRED, stack_a->indexed[i],0, NONE);
-		//else
-		//	printf(FRED"%3.d|%10.d   ", 0, 0);
-		i++;
-	}
-	i = 0;
-	while (i < stack_b->len)
-	{
+			printf(FRED"%.3d|%s%*.d%s%*.d|", stack_a->indexed[i],BRED, stack_a->indexed[i],0, NONE, max +1 - stack_a->indexed[i], 0);
+		else
+			printf(FRED"%3.d|%*.d%s|", 0, max + 1, 0, NONE);
 		if (i < stack_b->len)
-			printf(FGREEN"%.3d|%s%*.d%s\n", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
+			printf(FGREEN"%.3d|%s%*.d%s", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
 		//else
-			//printf(FGREEN"%10.d|   ", 0);
+//			printf(FGREEN"%3.d|%s   \n", 0, NONE);
+		printf("\n");
 		i++;
 	}
-	printf("___________________________________________\n");
-	scanf("%c", s);
+	//i = 0;
+	//while (i < stack_b->len)
+	//{
+	//	if (i < stack_b->len)
+	//		printf(FGREEN"%.3d|%s%*.d%s\n", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
+	//	//else
+	//		//printf(FGREEN"%3.d|   ", 0);
+	//	i++;
+	//}
+	printf("___________________________________________________________________________________________________________________________\n");
+	sleep(1);
+	//scanf("%c", s);
 }
 
 int			is_ordinated(t_stack *stack)
