@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:31:30 by sgiovo            #+#    #+#             */
-/*   Updated: 2021/03/25 10:52:08 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/25 15:28:53 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int				mparse_helper(char **argv, int r_argc, int i, int *out)
 		i = -1;
 		while (split[++i])
 		{
-			if (ft_strnbr(split[i]) && ft_atoi(split[i]) < MAX_INT &&
-			ft_atoi(split[i]) > MIN_INT && ft_strlen(split[i]) < 12)
+			if (ft_strnbr(split[i]) && ft_atoi(split[i]) <= MAX_INT &&
+			ft_atoi(split[i]) >= MIN_INT && ft_strlen(split[i]) <= 12)
 				out[j++] = (int)ft_atoi(split[i]);
 			else if (!is_a_flag(split[i]) || !ft_strnbr(split[i]))
 			{
