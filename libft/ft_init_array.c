@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdigit.c                                      :+:      :+:    :+:   */
+/*   ft_init_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmalori <dmalori@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/13 11:32:33 by dmalori           #+#    #+#             */
-/*   Updated: 2021/03/14 16:12:56 by dmalori          ###   ########.fr       */
+/*   Created: 2021/03/22 09:47:11 by dmalori           #+#    #+#             */
+/*   Updated: 2021/03/22 12:39:53 by dmalori          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_strdigit(const char *str)
+void	ft_init_array_num(int *arr, int len, int n)
 {
-	while (ft_isdigit(*str))
-		str++;
-	if (*str == 0)
-		return (1);
-	return (0);
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		arr[i] = n;
+		i++;
+	}
 }

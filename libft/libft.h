@@ -6,7 +6,7 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 12:24:26 by dmalori           #+#    #+#             */
-/*   Updated: 2021/03/19 14:58:58 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/23 17:57:02 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ typedef struct		s_flags
 	int zero;
 }					t_flags;
 
+void				ft_init_array_num(int *arr, int len, int n);
 int					ft_get_next_line(int fd, char **line);
 char				*ft_recalloc(char *line_old, ssize_t plus);
-int					ft_atoi(const char *nptr);
+long int			ft_atoi(const char *nptr);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nelem, size_t elsize);
 int					ft_isalnum(int c);
@@ -69,7 +70,7 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s);
 char				*ft_strndup(const char *s, size_t n);
 char				*ft_strndupfill(const char *s, size_t n, char fill);
-char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin(char *s1, char const *s2, int mod);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
@@ -114,10 +115,11 @@ int					ft_printf(const char *str, ...);
 int					ft_putlchar(char c);
 int					ft_putlstr(char *s, int len);
 char				*ft_toupperstr(char *str);
-int					ft_strdigit(const char *str);
-int 				ft_matrix_len(char **matrix);
+int					ft_strnbr(const char *str);
+int					ft_matrix_len(char **matrix);
 void				ft_free_matrix(char **matrix, int len);
 void				ft_print_matrix(char **matrix, char *prefix);
 void				ft_print_arrint(int *arr, int len, char *prefix);
+int					*ft_arr_dup(int *arr, int len);
 
 #endif

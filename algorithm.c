@@ -3,50 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dmalori <dmalori@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 21:45:49 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/20 14:25:03 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/25 15:04:34 by dmalori          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void		print_stack(t_stack *stack_a, t_stack *stack_b)
+void		print_helper(t_stack *stack_a, t_stack *stack_b, int len, int max)
 {
 	int i;
-	int max;
-	char s[100];
-	char **out;
 
 	i = 0;
-	max = stack_a->len + stack_b->len;
-	printf("\e[1;1H\e[2J");
-	while (i < max)
+	while (i < len)
 	{
 		if (i < stack_a->len)
-			printf(FRED"%.3d|%s%*.d%s%*.d|", stack_a->indexed[i],BRED, stack_a->indexed[i],0, NONE, max +1 - stack_a->indexed[i], 0);
-		else
-			printf(FRED"%3.d|%*.d%s|", 0, max + 1, 0, NONE);
+			ft_printf("|%*.d%s%*.d%s%s|%.3d%s|", max + 1 - stack_a->indexed[i],
+			0, BRED, stack_a->indexed[i], 0, NONE, FRED,
+			stack_a->indexed[i], NONE);
+		else if (i < stack_b->len)
+			ft_printf("|%3.d%*.d%s|", 0, max + 2, 0, NONE);
 		if (i < stack_b->len)
-			printf(FGREEN"%.3d|%s%*.d%s", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
-		//else
-//			printf(FGREEN"%3.d|%s   \n", 0, NONE);
-		printf("\n");
+			ft_printf(FGREEN"%.3d|%s%*.d%s%*.d|", stack_b->indexed[i], BGREEN,
+				stack_b->indexed[i], 0, NONE, max + 1 - stack_b->indexed[i], 0);
+		else if (i < stack_a->len)
+			ft_printf("    %*.d|", max + 1, 0);
+		ft_printf("\n");
 		i++;
 	}
-	//i = 0;
-	//while (i < stack_b->len)
-	//{
-	//	if (i < stack_b->len)
-	//		printf(FGREEN"%.3d|%s%*.d%s\n", stack_b->indexed[i],BGREEN, stack_b->indexed[i],0, NONE);
-	//	//else
-	//		//printf(FGREEN"%3.d|   ", 0);
-	//	i++;
-	//}
-	printf("___________________________________________________________________________________________________________________________\n");
-	sleep(1);
-	//scanf("%c", s);
+}
+
+void		print_stack(t_stack *stack_a, t_stack *stack_b)
+{
+	int		max;
+	int		len;
+
+	len = stack_a->len;
+	if (stack_b->len > stack_a->len)
+		len = stack_b->len;
+	max = stack_a->len + stack_b->len;
+	ft_printf("\e[1;1H\e[2J");
+	ft_printf("|%s%*.d| A %s|%s B |%*.d%s|\n", BBLACK, max + 1, 0,
+		NONE, BBLACK, max + 1, 0, NONE);
+	print_helper(stack_a, stack_b, len, max);
+	ft_printf("|%s%*.d|MOV%s|%.*d%s|%*.d%s|\n", BBLACK, max + 1, 0,
+		NONE, 3, stack_a->tot_move, BBLACK, max + 1, 0, NONE);
+	len = 0;
+	while (len < 300000000)
+		len++;
 }
 
 int			is_ordinated(t_stack *stack)
@@ -67,9 +73,10 @@ int			src_min(t_stack *stack, int min)
 {
 	int i;
 
+	i = 0;
 	while (i < stack->len)
 	{
-		if (stack->indexed[i] == min)
+		if (stack->stack[i] == min)
 		{
 			if (i < (stack->len / 2))
 				return (1);
@@ -79,130 +86,4 @@ int			src_min(t_stack *stack, int min)
 		i++;
 	}
 	return (1);
-}
-
-char **RES = NULL;
-int FIND = 3;
-
-//void 	recursion(t_stack stack_a, t_stack stack_b, int i, char **list_f, int **status, char **moves)
-//{
-//	if (i + 1 > FIND)
-//		return;
-//	if (is_ordinated(&stack_b))
-//	{
-//		RES = list_f;
-//		FIND = i;
-//		return;
-//	}
-//	for (int j = 0; j < 11; j++)
-//	{
-//		recursion(stack_a, stack_b, int i, char **list_f, int **status, char **moves)
-//	}
-//
-void		algorithm2(t_stack *stack_a, t_stack *stack_b)
-{
-	int i;
-	int min;
-
-	min = 1;
-	i = 0;
-	while (1)
-	{
-		if ((stack_a->indexed[0] >= min) && (stack_a->indexed[0] <= min + 10))
-			move(stack_a, stack_b, "pb");
-		else if (stack_b->len == 10)
-		{
-			//recursion;
-			while (stack_b->len != 0)
-			{
-				move(stack_a, stack_b, "pa");
-				move(stack_a, stack_b, "ra");
-				i++;
-			}
-			min += 10;
-		}
-		else
-			move(stack_a, stack_b, "ra");
-	}
-	
-}
-
-void		algorithm(t_stack *stack_a, t_stack *stack_b)
-{
-	int i;
-	int min;
-	int	src;
-	int max;
-
-	i = 0;
-	min = 1;
-	max = stack_a->len;
-	printf("sss\n");
-	while (1)
-	{
-		if (stack_a->indexed[0] == min)
-		{
-			move(stack_a, stack_b, "ra");
-			min++;
-		}
-		//if (stack_a->indexed[stack_a->len] == min)
-		//{
-		//	move(stack_a, stack_b, "rra");
-		//	min++;
-		//}
-		else if (is_ordinated(stack_a))
-		{
-			if (stack_b->len == 0)
-				break ;
-			src = src_min(stack_b, min);
-			while (stack_b->len != 0)
-			{
-				if (src > 0)
-				{
-					if (stack_b->indexed[0] == min)
-					{
-						move(stack_a, stack_b, "pa");
-						move(stack_a, stack_b, "ra");
-						min++;
-						src = src_min(stack_b, min);
-					}
-					if (stack_b->indexed[0] == max)
-					{
-						move(stack_a, stack_b, "pa");
-						max--;
-					}
-					else
-						move(stack_a, stack_b, "rb");
-					i++;	
-				}
-				if (src < 0)
-				{
-					if (stack_b->indexed[stack_b->len - 1] == min)
-					{
-						move(stack_a, stack_b, "rrb");
-						move(stack_a, stack_b, "pa");
-						move(stack_a, stack_b, "ra");
-						min++;
-						src = src_min(stack_b, min);
-					}
-					if (stack_b->indexed[stack_b->len - 1] == max)
-					{
-						move(stack_a, stack_b, "pa");
-						max--;
-					}
-					else
-						move(stack_a, stack_b, "rrb");
-					i++;	
-				}
-				print_stack(stack_a, stack_b);
-			}
-		}
-		else
-			move(stack_a, stack_b, "pb");
-		print_stack(stack_a, stack_b);
-		i++;
-	}
-	printf(FYELLOW"\n");
-	ft_print_arrint(stack_a->stack, stack_a->len, "--");
-	printf(FYELLOW"RESULT: %d %d %d\n", i, stack_a->len, stack_b->len);
 }

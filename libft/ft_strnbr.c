@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   ft_strnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 22:17:02 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/25 11:48:24 by forsili          ###   ########.fr       */
+/*   Created: 2021/01/13 11:32:33 by dmalori           #+#    #+#             */
+/*   Updated: 2021/03/22 17:58:57 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_matrix(char **matrix, int len)
+int			ft_strnbr(const char *str)
 {
-	int i;
-
-	i = 0;
-	if (!matrix)
-		return ;
-	while (i < len)
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
+	if (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		str++;
+	if (*str == 0)
+		return (1);
+	return (0);
 }

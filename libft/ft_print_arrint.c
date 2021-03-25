@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   fr_print_arrint.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dmalori <dmalori@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/18 22:17:02 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/25 11:48:24 by forsili          ###   ########.fr       */
+/*   Created: 2021/03/22 14:21:30 by dmalori           #+#    #+#             */
+/*   Updated: 2021/03/22 14:21:47 by dmalori          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_matrix(char **matrix, int len)
+void	ft_print_arrint(int *arr, int len, char *prefix)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	if (!matrix)
-		return ;
 	while (i < len)
 	{
-		free(matrix[i]);
+		ft_printf("%s%d ", prefix, arr[i]);
 		i++;
 	}
-	free(matrix);
 }

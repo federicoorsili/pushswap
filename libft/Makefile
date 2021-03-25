@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: forsili <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: dmalori <dmalori@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 09:44:39 by dmalori           #+#    #+#              #
-#    Updated: 2021/03/18 22:23:45 by forsili          ###   ########.fr        #
+#    Updated: 2021/03/23 14:30:38 by dmalori          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,29 +99,35 @@ SRCS		= 	ft_memset.c \
 				ft_putlchar.c \
 				ft_putlstr.c \
 				ft_toupperstr.c \
-				ft_strdigit.c \
+				ft_strnbr.c \
 				ft_matrix_len.c \
 				ft_free_matrix.c \
-				ft_print_matrix.c
+				ft_print_matrix.c \
+				ft_init_array.c \
+				ft_print_arrint.c \
+				ft_arr_dup.c
 				
 OBJS		= ${SRCS:.c=.o}
 
 RM			= rm -f
 
 %.o:		%.c
-			${CC} ${CFLAGS} $<
+			@${CC} ${CFLAGS} $<
 
 $(NAME):	${OBJS}
-			${LIB} ${NAME} ${OBJS}
-			${RAN} ${NAME}
+			@echo "MAKE FTLIB"
+			@${LIB} ${NAME} ${OBJS}
+			@${RAN} ${NAME}
+			@echo "FTLIB OK"
 
 all:		${NAME}
 
 clean:
-			${RM} ${OBJS}
+			@${RM} ${OBJS}
 
 fclean:		clean
-			${RM} ${NAME}
+			@echo "DELETE FTLIB"
+			@${RM} ${NAME}
 
 re:			fclean all
 

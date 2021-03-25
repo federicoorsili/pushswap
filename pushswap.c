@@ -6,116 +6,50 @@
 /*   By: forsili <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:32:43 by forsili           #+#    #+#             */
-/*   Updated: 2021/03/20 14:16:05 by forsili          ###   ########.fr       */
+/*   Updated: 2021/03/24 19:47:15 by forsili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void			indexing(t_stack *stack, int j)
+t_stack			parsing(t_stack stack_a, char **argv, int argc)
 {
-	char	*used;
-	int		*out;
-	int 	i;
-	int		k;
-	int		min;
-
-	i = 0;
-	used = ft_calloc(500, sizeof(int));
-	while (i < stack->len)
+	flag_taker_pushswap(&stack_a, argc, argv);
+	stack_a = parse_multi(argc, argv, stack_a, 0);
+	if (stack_a.error == 1)
 	{
-		min = MAX_INT;
-		k = -1;
-		while (++k < stack->len)
-			if (used[k] == 0 && stack->stack[k] <= min)
-				min = stack->stack[k];
-		k = -1;
-		while (++k < stack->len)
-		{
-			if (stack->stack[k] == min && used[k] == 0)
-			{
-				used[k] = 1;
-				stack->indexed[k] = j;
-				j++;
-			}
-		}
-		i++;
+		write(2, "Error\n", 6);
+		free(stack_a.stack);
+		exit(0);
 	}
-	free(used);
+	if (stack_a.file)
+		ft_get_next_line(0, &stack_a.filepath);
+	else
+		stack_a.filepath = 0;
+	if (!(stack_a.indexed = ft_calloc(stack_a.len + 1, sizeof(int))))
+		exit(0);
+	indexing(&stack_a, 1);
+	stack_a.ricorsione = 0;
+	stack_a.check_moves = NULL;
+	return (stack_a);
 }
 
-t_stack		parse(int argc, char **argv, t_stack stack)
-{
-	int		i;
-	char	**tmp;
-	int		*out;
-
-	tmp = ft_split(argv[1], ' ');
-	if (!(out = malloc(ft_matrix_len(tmp) * sizeof(int))))
-		return (stack);
-	i = 0;
-	while (tmp[i])
-	{
-		out[i] = ft_atoi(tmp[i]);
-		i++;
-	}
-	stack.len = i;
-	ft_free_matrix(tmp, ft_matrix_len(tmp));
-	stack.stack = out;
-	return (stack);
-}
-
-t_stack		init_stack(t_stack stack, int len)
-{
-	if (!(stack.stack = ft_calloc(len, sizeof(int *))))
-		return (stack);
-	stack.len = 0;
-	indexing(&stack, 1);
-	return (stack);
-}
-
-int			main(int argc, char **argv, char **env)
+int				main(int argc, char **argv)
 {
 	t_stack		stack_a;
 	t_stack		stack_b;
-	char		*m;
 
-	if (argc < 2)
-		return (0);
-	e = &env;
-	m = malloc(300);
-	stack_a = parse(argc, argv, stack_a);
+	ft_memset(&stack_a, 0, sizeof(t_stack));
+	ft_memset(&stack_b, 0, sizeof(t_stack));
+	stack_a = parsing(stack_a, argv, argc);
 	stack_b = init_stack(stack_b, stack_a.len);
-	stack_a.indexed = ft_calloc(stack_a.len, sizeof(int));
-	indexing(&stack_a , 1);
-	//moves = define_moves();
-	ft_print_arrint(stack_a.stack, stack_a.len, FRED);
-	ft_print_arrint(stack_a.indexed, stack_a.len, FPURPLE);
-	ft_print_arrint(stack_b.stack, stack_b.len, FGREEN);
-	ft_print_arrint(stack_b.indexed, stack_b.len, FYELLOW);
-	algorithm(&stack_a, &stack_b);
-	while (1)
-	{
-		scanf("%s", m);
-		move(&stack_a, &stack_b, m);
-		print_stack(&stack_a, &stack_b);
-	}
-	//do_sasb(&stack_a);
-	//ft_print_arrint(stack_a.stack, stack_a.len, "-->");
-	//ft_print_arrint(stack_a.indexed, stack_a.len, "ooo>");
-	//do_ss(&stack_a, &stack_b);
-	//ft_print_arrint(stack_a.stack, stack_a.len, "-->");
-	//ft_print_arrint(stack_a.indexed, stack_a.len, "ooo>");
-	//shift_rev_stack(&stack_a);
-	//shift_stack(&stack_a, 0);
-	//shift_stack(&stack_a, 0);
-	//do_push(&stack_a, &stack_b);
-	//do_push(&stack_a, &stack_b);
-	//rotate_one_stack(&stack_a);
-	//rotate_two_stack(&stack_a, &stack_b);
-	//ft_print_arrint(stack_a.stack, stack_a.len, "aaa>");
-	//ft_print_arrint(stack_a.indexed, stack_a.len, "AAA>");
-	//ft_print_arrint(stack_b.stack, stack_b.len, "bbb>");
-	//ft_print_arrint(stack_b.indexed, stack_b.len, "BBB>");
+	if (stack_a.len > 5)
+		final_algo_start(&stack_a, &stack_b);
+	else
+		final_ricorsione(&stack_a, &stack_b);
+	free(stack_a.stack);
+	free(stack_a.indexed);
+	free(stack_b.stack);
+	free(stack_b.indexed);
 	return (0);
 }
